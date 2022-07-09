@@ -48,7 +48,6 @@ export default function CompassPage({ changeView }) {
                 <Map center={{ lat: -36.842, lng: 174.757 }} zoom={15} />
               )}
             </div>
-
             <div>
               <h2 className="font-bold text-5xl text-center mb-4">246m Away</h2>
               <h3 className="font-bold text-base text-center">Gelatiamo</h3>
