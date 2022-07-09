@@ -1,8 +1,3 @@
-
-export default function SelectionPage() {
-    return (
-        <div>
-            Selection Page
-        </div>
-    )
+export default function SelectionPage({ changeView }) {
+  return <div>Selection Page</div>;
 }

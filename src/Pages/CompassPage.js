@@ -1,8 +1,3 @@
-
-export default function CompassPage() {
-    return (
-        <div>
-            Compass Page
-        </div>
-    )
+export default function CompassPage({ changeView }) {
+  return <div>Compass Page</div>;
 }
