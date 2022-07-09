@@ -1,5 +1,6 @@
 import { React, useState } from 'react';
 import { CompassProvider } from './context/CompassContext';
+import { GeoProvider } from './context/GeoContext';
 import CompassPage from './pages/CompassPage';
 import SelectionPage from './pages/SelectionPage';
 
@@ -13,9 +14,11 @@ function App() {
         return <SelectionPage changeView={changeView} setSelectedLocation={setSelectedLocation} />;
       case 'compass':
         return (
-          <CompassProvider>
-            <CompassPage changeView={changeView} selectedLocation={selectedLocation} />
-          </CompassProvider>
+          <GeoProvider>
+            <CompassProvider>
+              <CompassPage changeView={changeView} selectedLocation={selectedLocation} />
+            </CompassProvider>
+          </GeoProvider>
         );
 
       default:
