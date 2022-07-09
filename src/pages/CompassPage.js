@@ -29,11 +29,14 @@ export default function CompassPage({ changeView }) {
           height: '40%',
         }}
       />
-      {isMap && (
-        <div className="fixed w-full h-3/4 -z-10">
-          <Map center={{ lat: -36.842, lng: 174.757 }} zoom={15} setNearest={setNearestLocation} isHidden={isMap} />
-        </div>
-      )}
+      <div className="fixed w-full h-3/4 -z-10" style={{ visibility: isMap ? 'visible' : 'hidden' }}>
+        <Map
+          center={{ lat: -36.842, lng: 174.757 }}
+          zoom={15}
+          setNearestLocation={setNearestLocation}
+          isHidden={isMap}
+        />
+      </div>
       <div className="h-full">
         <Wrapper apiKey={process.env.REACT_APP_API_KEY} render={(status) => render(status)} libraries={['places']}>
           <div className="w-full p-5 flex flex-col items-center gap-10 h-full">

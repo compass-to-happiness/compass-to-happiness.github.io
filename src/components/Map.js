@@ -1,11 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 
-const containerStyle = {
-  width: '100%',
-  height: '100%',
-};
-
-export default function Map({ center, zoom, setNearest, isHidden }) {
+export default function Map({ center, zoom, setNearest }) {
   const ref = useRef(null);
   const [mapObj, setMapObj] = useState(null);
 
@@ -36,7 +31,7 @@ export default function Map({ center, zoom, setNearest, isHidden }) {
         }
       }
     });
-  }, [mapObj]);
+  }, [mapObj, setNearest]);
 
-  return <div ref={ref} id="map" style={{ ...containerStyle, visibility: isHidden ? 'hidden' : 'visible' }} />;
+  return <div ref={ref} id="map" className="w-full h-full" />;
 }
