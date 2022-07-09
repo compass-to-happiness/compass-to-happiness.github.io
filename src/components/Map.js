@@ -14,6 +14,6 @@ export default function Map({ center, zoom }) {
       zoom,
       disableDefaultUI: true,
     });
-  });
+  }, [center, zoom, ref]);
   return <div ref={ref} id="map" style={containerStyle} />;
 }
