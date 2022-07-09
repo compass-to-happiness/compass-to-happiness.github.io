@@ -45,15 +45,13 @@ export default function SelectionPage({ changeView, setSelectedLocation }) {
   ];
 
   return (
-    <div className="w-full h-screen p-5 flex flex-col items-center gap-10">
-      <div className="text-center flex flex-col gap-10">
+    <div className="w-full h-screen p-5 flex flex-col items-center gap-14">
+      <div className="text-center flex flex-col gap-6 items-center">
         <h3>Compass to Happiness</h3>
-        <h1 className="text-5xl">What are you feeling?</h1>
+        <h1 className="text-5xl font-bold w-4/6 ">What are you feeling?</h1>
       </div>
-      <div className="flex-grow flex items-center">
-        <div className="flex flex-wrap gap-5 justify-center">
-          {buttons.map((s) => selectionButton({ ...s, setSelectedLocation: gotoSelectedLocation(s.name) }))}
-        </div>
+      <div className="flex flex-wrap gap-5 justify-center">
+        {buttons.map((s) => selectionButton({ ...s, setSelectedLocation: gotoSelectedLocation(s.name) }))}
       </div>
       <img
         src={greenBlob}

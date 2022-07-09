@@ -14,7 +14,7 @@ const render = (status) => {
 };
 
 export default function CompassPage({ changeView }) {
-  const [isMap, setIsMap] = useState('false');
+  const [isMap, setIsMap] = useState(false);
 
   return (
     <>
@@ -36,8 +36,8 @@ export default function CompassPage({ changeView }) {
       <div className="h-full">
         <Wrapper apiKey={process.env.REACT_APP_API_KEY} render={(status) => render(status)}>
           <div className="w-full p-5 flex flex-col items-center gap-10 h-full">
-            <div>
-              <h3 className="font-bold text-base text-center mb-6 font-s">Compass to Happiness</h3>
+            <div className="text-center flex flex-col gap-6">
+              <h3>Compass to Happiness</h3>
               <button
                 onClick={() => changeView('select')}
                 className="rounded-2xl pt-3 pb-3 px-6 text-base font-semibold bg-primary-200"
