@@ -23,7 +23,7 @@ export default function CompassPage({ changeView }) {
       <div className="h-1/6">
         <h3 className="font-bold text-base text-center mb-12">Compass to Happiness</h3>
         <button
-          onClick={changeView('select')}
+          onClick={() => changeView('select')}
           className="rounded-2xl border-2 pt-3.5 pb-4 px-10 text-base font-semibold"
         >
           {' '}
