@@ -5,6 +5,14 @@ export default function Map({ center, zoom, setNearest }) {
   const [mapObj, setMapObj] = useState(null);
 
   useEffect(() => {
+    if (window.google?.maps?.Map == null) {
+      console.log('Waiting for Google Maps API to load.');
+      return;
+    }
+    if (ref.current == null) {
+      console.log('ref.current is null');
+      return;
+    }
     const map = new window.google.maps.Map(ref.current, {
       center,
       zoom,
