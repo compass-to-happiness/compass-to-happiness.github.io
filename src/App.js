@@ -23,7 +23,7 @@ function App() {
     }
   }
 
-  return <div>{selectComponent()}</div>;
+  return selectComponent();
 }
 
 export default App;
