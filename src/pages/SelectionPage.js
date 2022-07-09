@@ -1,11 +1,11 @@
 import { useCallback } from 'react';
 
-import iceCreamImage from './select-icons/ice-cream.png';
-import burgerImage from './select-icons/burger.png';
-import pizzaImage from './select-icons/pizza.png';
-import friedChickenImage from './select-icons/fried-chicken.png';
-import alcoholImage from './select-icons/beer.png';
-import coffeeImage from './select-icons/coffee.png';
+import iceCreamImage from '../images/ice-cream.png';
+import burgerImage from '../images/burger.png';
+import pizzaImage from '../images/pizza.png';
+import friedChickenImage from '../images/fried-chicken.png';
+import alcoholImage from '../images/beer.png';
+import coffeeImage from '../images/coffee.png';
 
 export default function SelectionPage({ changeView, setSelectedLocation }) {
   const gotoSelectedLocation = useCallback(
