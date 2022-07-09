@@ -11,7 +11,7 @@ const render = (status, changeView) => {
     case Status.FAILURE:
       return <Error />;
     case Status.SUCCESS:
-      return <div></div>;
+      return;
     default:
       return <Error />;
   }
@@ -22,7 +22,10 @@ export default function CompassPage({ changeView }) {
     <div className="w-full h-screen p-5 flex flex-col items-center gap-10">
       <div className="h-1/6">
         <h3 className="font-bold text-base text-center mb-12">Compass to Happiness</h3>
-        <button className="rounded-2xl border-2 pt-3.5 pb-4 px-10 text-base font-semibold">
+        <button
+          onClick={changeView('select')}
+          className="rounded-2xl border-2 pt-3.5 pb-4 px-10 text-base font-semibold"
+        >
           {' '}
           &lt;- Something Different
         </button>
