@@ -14,13 +14,7 @@ function App() {
       case 'select':
         return <SelectionPage changeView={changeView} setSelectedLocation={setSelectedLocation} />;
       case 'compass':
-        return (
-          <GeoProvider>
-            <CompassProvider>
-              <CompassPage changeView={changeView} selectedKeyword={selectedLocation} />
-            </CompassProvider>
-          </GeoProvider>
-        );
+        return <CompassPage changeView={changeView} selectedKeyword={selectedLocation} />;
 
       default:
         return <div>No component found</div>;
@@ -29,7 +23,9 @@ function App() {
 
   return (
     <GoogleApiWrapper apiKey={process.env.REACT_APP_API_KEY} libraries={['places', 'geometry']}>
-      {selectComponent()}
+      <GeoProvider>
+        <CompassProvider>{selectComponent()}</CompassProvider>
+      </GeoProvider>
     </GoogleApiWrapper>
   );
 }
