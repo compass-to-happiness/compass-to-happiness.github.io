@@ -14,7 +14,7 @@ const render = (status) => {
 };
 
 export default function CompassPage({ changeView }) {
-  const [isMap, setIsMap] = useState('false');
+  const [isMap, setIsMap] = useState(false);
   const [nearestLocation, setNearestLocation] = useState(null);
 
   return (
