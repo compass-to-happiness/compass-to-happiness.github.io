@@ -3,10 +3,10 @@ import Spinner from '../components/Spinner';
 import Error from '../components/Error';
 import Compass from '../components/Compass';
 import Map from '../components/Map';
-import mapIcon from '../images/map.png';
 import backArrow from '../images/back-arrow.png';
 import { useState } from 'react';
 import { ReactComponent as PinkBlobSVG } from '../images/pink-blob.svg';
+import MapToggleButton from '../components/MapToggleButton';
 
 const render = (status) => {
   if (status === Status.FAILURE) return <Error />;
@@ -51,12 +51,7 @@ export default function CompassPage({ changeView }) {
             <div>
               <h2 className="font-bold text-5xl text-center mb-4">246m Away</h2>
               <h3 className="font-bold text-base text-center">Gelatiamo</h3>
-              <img
-                onClick={() => changeToMap(!isMap)}
-                className="w-24 h-24 rounded-2xl bg-white p-3"
-                src={mapIcon}
-                alt="Map icon"
-              />
+              <MapToggleButton onClick={() => changeToMap(!isMap)} isCurrentlyMap={isMap} />
             </div>
           </div>
         </Wrapper>
