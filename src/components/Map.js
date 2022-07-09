@@ -40,7 +40,7 @@ function addRequestToCache(request, value) {
   const key = requestToKey(request);
 
   const now = Date.now();
-  const expiry = request.openNow ? now - now % (30 * MINUTE) + 30 * MINUTE : now - now % DAY + DAY;
+  const expiry = request.openNow ? now - (now % (30 * MINUTE)) + 30 * MINUTE : now - (now % DAY) + DAY;
 
   setInCache(key, value, expiry);
 }
@@ -55,11 +55,11 @@ function nearbySearchWithCache(mapObj, request, cb) {
   const placesService = new window.google.maps.places.PlacesService(mapObj);
   placesService.nearbySearch(request, (results, status) => {
     if (status !== 'OK' || results.length === 0) {
-      cb(null)
+      cb(null);
       addRequestToCache(request, null);
       return;
     }
-  
+
     const {
       name,
       rating,
@@ -72,7 +72,7 @@ function nearbySearchWithCache(mapObj, request, cb) {
       lat: location.lat(),
       lng: location.lng(),
     };
-    cb(result)
+    cb(result);
     addRequestToCache(request, result);
   });
 }
@@ -121,7 +121,7 @@ export default function Map({
       type: placeType,
     };
 
-    nearbySearchWithCache(mapObj, request, result => setNearestLocation(result));
+    nearbySearchWithCache(mapObj, request, (result) => setNearestLocation(result));
   }, [mapObj, keyword, currentLocation, openNow, rankBy, placeType, setNearestLocation]);
 
   return <div ref={ref} id="map" className="w-full h-full" />;
