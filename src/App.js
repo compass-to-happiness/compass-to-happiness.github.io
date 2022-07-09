@@ -1,3 +1,4 @@
+import { Wrapper as GoogleApiWrapper } from '@googlemaps/react-wrapper';
 import { React, useState } from 'react';
 import { CompassProvider } from './context/CompassContext';
 import { GeoProvider } from './context/GeoContext';
@@ -16,7 +17,7 @@ function App() {
         return (
           <GeoProvider>
             <CompassProvider>
-              <CompassPage changeView={changeView} selectedLocation={selectedLocation} />
+              <CompassPage changeView={changeView} selectedKeyword={selectedLocation} />
             </CompassProvider>
           </GeoProvider>
         );
@@ -26,7 +27,11 @@ function App() {
     }
   }
 
-  return selectComponent();
+  return (
+    <GoogleApiWrapper apiKey={process.env.REACT_APP_API_KEY} libraries={['places']}>
+      {selectComponent()}
+    </GoogleApiWrapper>
+  );
 }
 
 export default App;
