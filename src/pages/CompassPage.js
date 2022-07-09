@@ -18,7 +18,16 @@ export default function CompassPage({ changeView }) {
 
   return (
     <>
-      <PinkBlobSVG className="fixed" style={{zIndex:'-1', bottom:'-70vw', left:'clamp(-100px, -10vw, 0px)', transform: 'rotate(-80deg)', height:'160vw'}} />
+      <PinkBlobSVG
+        className="fixed"
+        style={{
+          zIndex: '-1',
+          bottom: '-70vw',
+          left: 'clamp(-100px, -10vw, 0px)',
+          transform: 'rotate(-80deg)',
+          height: '160vw',
+        }}
+      />
       <div className="h-full">
         <Wrapper apiKey={process.env.REACT_APP_API_KEY} render={(status) => render(status)}>
           <div className="w-full p-5 flex flex-col items-center gap-10 h-full">
@@ -32,7 +41,7 @@ export default function CompassPage({ changeView }) {
                 Something Different
               </button>
             </div>
-            <div className="h-1/2">{isMap ? <Map /> : <Compass angle='50' className='w-44 h-44' />}</div>
+            <div className="h-1/2">{isMap ? <Map /> : <Compass angle="50" className="w-44 h-44" />}</div>
 
             <div>
               <h2 className="font-bold text-5xl text-center mb-4">246m Away</h2>
