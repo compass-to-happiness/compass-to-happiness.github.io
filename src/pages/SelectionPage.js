@@ -59,6 +59,7 @@ export default function SelectionPage({ changeView, setSelectedLocation }) {
 
 const selectionButton = ({ name, image, setSelectedLocation }) => (
   <button
+    key={name}
     className={
       'flex button w-40 h-40 radius-lg border-2 drop-shadow-sm drop-shadow-md grid justify-center content-center'
     }
