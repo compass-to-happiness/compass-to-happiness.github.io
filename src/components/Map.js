@@ -1,8 +1,8 @@
 import { useRef, useEffect, useState } from 'react';
 
 const containerStyle = {
-  width: '400px',
-  height: '400px',
+  width: '100%',
+  height: '100%',
 };
 
 export default function Map({ center, zoom, setNearest, isHidden }) {
