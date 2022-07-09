@@ -1,6 +1,6 @@
 import { React, useState } from "react";
-import CompassPage from "./Pages/CompassPage";
-import SelectionPage from "./Pages/SelectionPage";
+import CompassPage from "./pages/CompassPage";
+import SelectionPage from "./pages/SelectionPage";
 
 function App() {
   const [currentComponent, changeView] = useState("select");
