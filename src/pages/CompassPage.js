@@ -5,15 +5,15 @@ import { useState } from 'react';
 import { ReactComponent as PinkBlob } from '../images/pink-blob-rotated.svg';
 import MapToggleButton from '../components/MapToggleButton';
 import { useGeo } from '../context/GeoContext';
+import LoadingPage from './LoadingPage';
 
 export default function CompassPage({ changeView, selectedKeyword }) {
   const [isMap, setIsMap] = useState(false);
   const [nearestLocation, setNearestLocation_] = useState(null);
   const { lat, lng, errorMessage } = useGeo();
 
-  if (errorMessage) {
-    return <div>{errorMessage}</div>;
-  }
+  if (errorMessage === 'Loading...') return <LoadingPage />;
+  if (errorMessage) return <p>{errorMessage}</p>;
 
   const setNearestLocation = (location) => {
     if (JSON.stringify(location) !== JSON.stringify(nearestLocation)) {
