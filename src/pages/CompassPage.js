@@ -4,17 +4,23 @@ import backArrow from '../images/back-arrow.png';
 import { useState } from 'react';
 import { ReactComponent as PinkBlob } from '../images/pink-blob-rotated.svg';
 import MapToggleButton from '../components/MapToggleButton';
+import { useGeo } from '../context/GeoContext';
 
-
-export default function CompassPage({ changeView }) {
+export default function CompassPage({ changeView, selectedKeyword }) {
   const [isMap, setIsMap] = useState(false);
   const [nearestLocation, setNearestLocation_] = useState(null);
+  const { lat, lng, errorMessage } = useGeo();
+
+  if (errorMessage) {
+    return <div>{errorMessage}</div>;
+  }
 
   const setNearestLocation = (location) => {
     if (JSON.stringify(location) !== JSON.stringify(nearestLocation)) {
       setNearestLocation_(location);
+      console.log('setNearestLocation:', location);
     }
-  }
+  };
 
   return (
     <>
@@ -30,11 +36,11 @@ export default function CompassPage({ changeView }) {
       />
       <div className="fixed w-full h-3/4 -z-10" style={{ visibility: isMap ? 'visible' : 'hidden' }}>
         <Map
-          center={{ lat: -36.842, lng: 174.757 }}
+          center={{ lat, lng }}
           zoom={15}
           setNearestLocation={setNearestLocation}
-          keyword="ice cream"
-          currentLocation={{ lat: -36.842, lng: 174.757 }}
+          keyword={selectedKeyword}
+          currentLocation={{ lat, lng }}
           openNow={true}
         />
       </div>

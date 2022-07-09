@@ -17,7 +17,7 @@ function App() {
         return (
           <GeoProvider>
             <CompassProvider>
-              <CompassPage changeView={changeView} selectedLocation={selectedLocation} />
+              <CompassPage changeView={changeView} selectedKeyword={selectedLocation} />
             </CompassProvider>
           </GeoProvider>
         );
