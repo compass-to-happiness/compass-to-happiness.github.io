@@ -45,13 +45,15 @@ export default function SelectionPage({ changeView, setSelectedLocation }) {
   ];
 
   return (
-    <div className="w-full h-screen p-5 flex flex-col items-center gap-14">
-      <div className="text-center flex flex-col gap-6 items-center">
+    <div className="w-full h-screen p-5 flex flex-col items-center gap-10">
+      <div className="text-center flex flex-col gap-6">
         <h3>Compass to Happiness</h3>
-        <h1 className="text-5xl font-bold w-4/6 ">What are you feeling?</h1>
+        <h1 className="text-5xl font-bold">What are you feeling?</h1>
       </div>
-      <div className="flex flex-wrap gap-5 justify-center">
-        {buttons.map((s) => selectionButton({ ...s, setSelectedLocation: gotoSelectedLocation(s.name) }))}
+      <div className="flex items-center">
+        <div className="flex flex-wrap gap-5 justify-center pb-5 max-w-2xl">
+          {buttons.map((s) => selectionButton({ ...s, setSelectedLocation: gotoSelectedLocation(s.name) }))}
+        </div>
       </div>
       <img
         src={greenBlob}
@@ -72,7 +74,7 @@ export default function SelectionPage({ changeView, setSelectedLocation }) {
 const selectionButton = ({ name, image, setSelectedLocation }) => (
   <button
     key={name}
-    className="grid w-40 h-40 rounded-lg drop-shadow-xl justify-center content-center"
+    className="flex w-40 h-40 rounded-lg drop-shadow-xl justify-center items-center"
     onClick={() => setSelectedLocation(name)}
     style={{ backgroundColor: 'white' }}
   >
