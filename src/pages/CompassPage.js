@@ -3,6 +3,7 @@ import Spinner from '../components/Spinner';
 import Error from '../components/Error';
 import Compass from '../components/Compass';
 import mapIcon from '../images/map.png';
+import backArrow from '../images/back-arrow.png';
 
 const render = (status, changeView) => {
   switch (status) {
@@ -20,14 +21,14 @@ const render = (status, changeView) => {
 export default function CompassPage({ changeView }) {
   return (
     <div className="w-full h-screen p-5 flex flex-col items-center gap-10">
-      <div className="h-1/6">
-        <h3 className="font-bold text-base text-center mb-12">Compass to Happiness</h3>
+      <div className="">
+        <h3 className="font-bold text-base text-center mb-12 font-s">Compass to Happiness</h3>
         <button
           onClick={() => changeView('select')}
-          className="rounded-2xl border-2 pt-3.5 pb-4 px-10 text-base font-semibold"
+          className="rounded-2xl pt-3 pb-3 px-6 text-base font-semibold bg-primary-200"
         >
-          {' '}
-          &lt;- Something Different
+          <img src={backArrow} alt='Back arrow' className='w-4 inline mr-3'></img>
+          Something Different
         </button>
       </div>
       <div className="h-1/2">
