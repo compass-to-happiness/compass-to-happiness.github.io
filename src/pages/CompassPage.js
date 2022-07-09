@@ -16,12 +16,13 @@ const render = (status) => {
 export default function CompassPage({ changeView }) {
   const [isMap, setIsMap] = useState(false);
   const [nearestLocation, setNearestLocation_] = useState(null);
+  const currentLocation = { lat: -36.842, lng: 174.757 };
 
   const setNearestLocation = (location) => {
     if (JSON.stringify(location) !== JSON.stringify(nearestLocation)) {
       setNearestLocation_(location);
     }
-  }
+  };
 
   return (
     <>
@@ -36,15 +37,14 @@ export default function CompassPage({ changeView }) {
         }}
       />
       <div className="fixed w-full h-3/4 -z-10" style={{ visibility: isMap ? 'visible' : 'hidden' }}>
-        <Map
-          center={{ lat: -36.842, lng: 174.757 }}
-          zoom={15}
-          setNearestLocation={setNearestLocation}
-          isHidden={isMap}
-        />
+        <Map center={currentLocation} zoom={15} setNearestLocation={setNearestLocation} isHidden={isMap} />
       </div>
       <div className="h-full">
-        <Wrapper apiKey={process.env.REACT_APP_API_KEY} render={(status) => render(status)} libraries={['places']}>
+        <Wrapper
+          apiKey={process.env.REACT_APP_API_KEY}
+          render={(status) => render(status)}
+          libraries={['places', 'geometry']}
+        >
           <div className="w-full p-5 flex flex-col items-center gap-10 h-full">
             <div>
               <h3 className="font-bold text-base text-center mb-6 font-s">Compass to Happiness</h3>
@@ -57,7 +57,11 @@ export default function CompassPage({ changeView }) {
               </button>
             </div>
             <div className="h-1/2">
-              <Compass angle="50" className="h-44 w-44" style={{ visibility: isMap ? 'hidden' : '' }} />
+              <Compass
+                angle={window.google.maps.geometry.spherical.computeHeading(currentLocation, nearestLocation)}
+                className="h-44 w-44"
+                style={{ visibility: isMap ? 'hidden' : '' }}
+              />
             </div>
             <div>
               <h2 className="font-bold text-5xl text-center mb-4">246m Away</h2>
