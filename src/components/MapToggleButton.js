@@ -7,7 +7,7 @@ export default function MapToggleButton({ onClick, isCurrentlyMap }) {
       onClick={onClick}
       className="bg-[#fff] drop-shadow-md shadow-black w-10 h-10 p-2 fixed right-8 bottom-8 rounded-md cursor-pointer"
     >
-      <img src={isCurrentlyMap ? compassIcon : mapIcon} />
+      <img src={isCurrentlyMap ? compassIcon : mapIcon} alt={isCurrentlyMap ? 'Compass icon' : 'Map icon'} />
     </div>
   );
 }
