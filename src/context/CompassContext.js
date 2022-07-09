@@ -19,7 +19,7 @@ async function startCompassListening({ setBearing }) {
   if (DeviceOrientationEvent.requestPermission) {
     const response = await DeviceOrientationEvent.requestPermission();
     if (response !== 'granted') {
-      return 'Permission was denied by the user.';
+      return 'Compass permission was denied by the user.';
     }
   }
 
