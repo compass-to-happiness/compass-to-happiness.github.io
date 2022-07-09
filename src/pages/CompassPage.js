@@ -11,10 +11,7 @@ export default function CompassPage({ changeView, selectedKeyword }) {
   const [nearestLocation, setNearestLocation_] = useState(null);
   const { lat, lng, errorMessage } = useGeo();
   const compassAngle = nearestLocation
-    ? window.google.maps.geometry.spherical.computeHeading(
-        { lat, lng },
-        { lat: nearestLocation.lat, lng: nearestLocation.lng },
-      )
+    ? window.google.maps.geometry.spherical.computeHeading({ lat, lng }, nearestLocation)
     : 0;
 
   if (errorMessage) {
