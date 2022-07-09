@@ -5,7 +5,7 @@ import Compass from '../components/Compass';
 import Map from '../components/Map';
 import backArrow from '../images/back-arrow.png';
 import { useState } from 'react';
-import { ReactComponent as PinkBlobSVG } from '../images/pink-blob.svg';
+import { ReactComponent as PinkBlob } from '../images/pink-blob-rotated.svg';
 import MapToggleButton from '../components/MapToggleButton';
 
 const render = (status) => {
@@ -18,16 +18,21 @@ export default function CompassPage({ changeView }) {
 
   return (
     <>
-      <PinkBlobSVG
+      <PinkBlob
         className="fixed"
         style={{
           zIndex: '-1',
-          bottom: '-70vw',
-          left: 'clamp(-100px, -10vw, 0px)',
-          transform: 'rotate(-80deg)',
-          height: '160vw',
+          left: '-30vw',
+          bottom: '0',
+          width: '160vw',
+          height: '40%',
         }}
       />
+      {isMap && (
+        <div className="fixed w-full h-3/4 -z-10">
+          <Map center={{ lat: -36.842, lng: 174.757 }} zoom={15} />
+        </div>
+      )}
       <div className="h-full">
         <Wrapper apiKey={process.env.REACT_APP_API_KEY} render={(status) => render(status)}>
           <div className="w-full p-5 flex flex-col items-center gap-10 h-full">
@@ -42,11 +47,7 @@ export default function CompassPage({ changeView }) {
               </button>
             </div>
             <div className="h-1/2">
-              {isMap ? (
-                <Map center={{ lat: -36.842, lng: 174.757 }} zoom={15} />
-              ) : (
-                <Compass angle="50" className="w-44 h-44" />
-              )}
+              <Compass angle="50" className="h-44 w-44" style={{ visibility: isMap ? 'hidden' : '' }} />
             </div>
             <div>
               <h2 className="font-bold text-5xl text-center mb-4">246m Away</h2>
