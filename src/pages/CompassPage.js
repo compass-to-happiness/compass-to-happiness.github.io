@@ -15,7 +15,13 @@ const render = (status) => {
 
 export default function CompassPage({ changeView }) {
   const [isMap, setIsMap] = useState(false);
-  const [nearestLocation, setNearestLocation] = useState(null);
+  const [nearestLocation, setNearestLocation_] = useState(null);
+
+  const setNearestLocation = (location) => {
+    if (JSON.stringify(location) !== JSON.stringify(nearestLocation)) {
+      setNearestLocation_(location);
+    }
+  }
 
   return (
     <>
