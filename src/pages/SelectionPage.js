@@ -57,14 +57,14 @@ export default function SelectionPage({ changeView, setSelectedLocation }) {
       </div>
       <img
         src={greenBlob}
-        className="fixed -z-10"
+        className="fixed -z-10 max-w-md"
         style={{ top: '-150px', right: '-150px', transform: 'rotate(150deg)' }}
         alt="Green Blob"
       />
       <img
         src={pinkBlob}
-        className="fixed -z-10"
-        style={{ bottom: '-250px', left: '-150px', transform: 'rotate(168deg)' }}
+        className="fixed -z-10 max-w-xl"
+        style={{ bottom: '-350px', left: '-200px', transform: 'rotate(168deg)' }}
         alt="Green Blob"
       />
     </div>
