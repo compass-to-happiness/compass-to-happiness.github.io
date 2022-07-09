@@ -10,6 +10,12 @@ export default function CompassPage({ changeView, selectedKeyword }) {
   const [isMap, setIsMap] = useState(false);
   const [nearestLocation, setNearestLocation_] = useState(null);
   const { lat, lng, errorMessage } = useGeo();
+  const compassAngle = nearestLocation
+    ? window.google.maps.geometry.spherical.computeHeading(
+        { lat, lng },
+        { lat: nearestLocation.lat, lng: nearestLocation.lng },
+      )
+    : 0;
 
   if (errorMessage) {
     return <div>{errorMessage}</div>;
@@ -57,7 +63,7 @@ export default function CompassPage({ changeView, selectedKeyword }) {
             </button>
           </div>
           <div className="h-1/2">
-            <Compass angle={window.google.maps.geometry.spherical.computeHeading({lat, lng}, nearestLocation)} className="h-44 w-44" style={{ visibility: isMap ? 'hidden' : '' }} />
+            <Compass angle={compassAngle} className="h-44 w-44" style={{ visibility: isMap ? 'hidden' : '' }} />
           </div>
           <div>
             <h2 className="font-bold text-5xl text-center mb-4">246m Away</h2>

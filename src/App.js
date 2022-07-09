@@ -28,7 +28,7 @@ function App() {
   }
 
   return (
-    <GoogleApiWrapper apiKey={process.env.REACT_APP_API_KEY} libraries={['places']}>
+    <GoogleApiWrapper apiKey={process.env.REACT_APP_API_KEY} libraries={['places', 'geometry']}>
       {selectComponent()}
     </GoogleApiWrapper>
   );
