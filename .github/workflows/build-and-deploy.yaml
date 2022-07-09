@@ -30,6 +30,11 @@ jobs:
       - name: 🛠️ Build
         run: npm run build
 
+      - name: ⚡ Format
+        run: |
+          npm run format
+          git diff --exit-code
+
       - name: Copy index.html to 404.html
         run: |
           cd ./build
