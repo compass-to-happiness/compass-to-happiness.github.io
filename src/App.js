@@ -1,15 +1,15 @@
-import { React, useState } from "react";
-import CompassPage from "./pages/CompassPage";
-import SelectionPage from "./pages/SelectionPage";
+import { React, useState } from 'react';
+import CompassPage from './pages/CompassPage';
+import SelectionPage from './pages/SelectionPage';
 
 function App() {
-  const [currentComponent, changeView] = useState("select");
+  const [currentComponent, changeView] = useState('select');
 
   function selectComponent() {
     switch (currentComponent) {
-      case "select":
+      case 'select':
         return <SelectionPage changeView={changeView} />;
-      case "compass":
+      case 'compass':
         return <CompassPage changeView={changeView} />;
 
       default:
