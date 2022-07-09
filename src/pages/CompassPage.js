@@ -46,8 +46,8 @@ export default function CompassPage({ changeView, selectedKeyword }) {
       </div>
       <div className="h-full">
         <div className="w-full p-5 flex flex-col items-center gap-10 h-full">
-          <div>
-            <h3 className="font-bold text-base text-center mb-6 font-s">Compass to Happiness</h3>
+          <div className="text-center flex flex-col gap-6">
+            <h3>Compass to Happiness</h3>
             <button
               onClick={() => changeView('select')}
               className="rounded-2xl pt-3 pb-3 px-6 text-base font-semibold bg-primary-200"
