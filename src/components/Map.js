@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 
-export default function Map({ center, zoom, setNearest }) {
+export default function Map({ center, zoom, setNearestLocation }) {
   const ref = useRef(null);
   const [mapObj, setMapObj] = useState(null);
 
@@ -35,11 +35,15 @@ export default function Map({ center, zoom, setNearest }) {
     service.findPlaceFromQuery(request, (results, status) => {
       if (status === 'OK') {
         if (results.length > 0) {
-          setNearest(results[0]);
+          setNearestLocation({
+            name: results[0].name,
+            lat: results[0].geometry.location.lat(),
+            lng: results[0].geometry.location.lng(),
+          });
         }
       }
     });
-  }, [mapObj, setNearest]);
+  }, [mapObj, setNearestLocation]);
 
   return <div ref={ref} id="map" className="w-full h-full" />;
 }
