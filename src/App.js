@@ -24,9 +24,7 @@ function App() {
   return (
     <GoogleApiWrapper apiKey={process.env.REACT_APP_API_KEY} libraries={['places']}>
       <GeoProvider>
-        <CompassProvider>
-          {selectComponent()}
-        </CompassProvider>
+        <CompassProvider>{selectComponent()}</CompassProvider>
       </GeoProvider>
     </GoogleApiWrapper>
   );
