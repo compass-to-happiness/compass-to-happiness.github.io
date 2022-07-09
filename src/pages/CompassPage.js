@@ -15,6 +15,7 @@ const render = (status) => {
 
 export default function CompassPage({ changeView }) {
   const [isMap, changeToMap] = useState('false');
+  const [nearestLocation, setNearestLocation] = useState(null);
 
   return (
     <>
@@ -41,12 +42,20 @@ export default function CompassPage({ changeView }) {
                 Something Different
               </button>
             </div>
-            <div className="h-1/2">
-              {isMap ? (
-                <Compass angle="50" className="w-44 h-44" />
-              ) : (
-                <Map center={{ lat: -36.842, lng: 174.757 }} zoom={15} />
-              )}
+            <div className="relative h-1/2">
+              {console.log(nearestLocation)}
+              <Compass
+                style={{ visibility: isMap ? 'hidden' : 'visible' }}
+                angle="50"
+                className="absolute w-44 h-full"
+              />
+              <Map
+                center={{ lat: -36.842, lng: 174.757 }}
+                zoom={15}
+                setNearest={setNearestLocation}
+                isHidden={!isMap}
+                className="absolute h-full"
+              />
             </div>
             <div>
               <h2 className="font-bold text-5xl text-center mb-4">246m Away</h2>

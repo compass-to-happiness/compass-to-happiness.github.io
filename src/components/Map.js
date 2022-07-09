@@ -5,10 +5,9 @@ const containerStyle = {
   height: '400px',
 };
 
-export default function Map({ center, zoom }) {
+export default function Map({ center, zoom, setNearest, isHidden }) {
   const ref = useRef(null);
   const [mapObj, setMapObj] = useState(null);
-  const coords = [];
 
   useEffect(() => {
     const map = new window.google.maps.Map(ref.current, {
@@ -33,11 +32,11 @@ export default function Map({ center, zoom }) {
     service.findPlaceFromQuery(request, (results, status) => {
       if (status === 'OK') {
         if (results.length > 0) {
-          console.log(results[0]);
+          setNearest(results[0]);
         }
       }
     });
-  }, [ref, mapObj]);
+  }, [mapObj]);
 
-  return <div ref={ref} id="map" style={containerStyle} />;
+  return <div ref={ref} id="map" style={{ ...containerStyle, visibility: isHidden ? 'hidden' : 'visible' }} />;
 }
