@@ -47,7 +47,7 @@ export default function CompassPage({ changeView }) {
               </button>
             </div>
             <div className="h-1/2">
-              <Compass angle="50" className="h-44 w-44" style={{visibility: isMap ? 'hidden' : ''}}/>
+              <Compass angle="50" className="h-44 w-44" style={{ visibility: isMap ? 'hidden' : '' }} />
             </div>
             <div>
               <h2 className="font-bold text-5xl text-center mb-4">246m Away</h2>
