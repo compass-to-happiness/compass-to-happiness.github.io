@@ -3,7 +3,7 @@ import CompassPage from './pages/CompassPage';
 import SelectionPage from './pages/SelectionPage';
 
 function App() {
-  const [currentComponent, changeView] = useState('select');
+  const [currentComponent, changeView] = useState('compass');
 
   function selectComponent() {
     switch (currentComponent) {
