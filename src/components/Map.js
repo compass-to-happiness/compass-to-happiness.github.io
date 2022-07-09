@@ -1,6 +1,15 @@
 import { useRef, useEffect, useState } from 'react';
 
-export default function Map({ center, zoom, setNearestLocation }) {
+export default function Map({
+  center,
+  zoom,
+  setNearestLocation,
+  keyword,
+  currentLocation,
+  openNow = true,
+  rankBy = 'distance',
+  placeType = 'food',
+}) {
   const ref = useRef(null);
   const [mapObj, setMapObj] = useState(null);
 
@@ -26,24 +35,33 @@ export default function Map({ center, zoom, setNearestLocation }) {
       console.log('mapObj is null');
       return;
     }
-    let request = {
-      query: 'Ice cream',
-      fields: ['name', 'geometry'],
+
+    const request = {
+      keyword,
+      location: currentLocation,
+      openNow,
+      rankBy: rankBy === 'distance' ? window.google.maps.places.RankBy.DISTANCE : rankBy,
+      type: placeType,
     };
 
-    let service = new window.google.maps.places.PlacesService(mapObj);
-    service.findPlaceFromQuery(request, (results, status) => {
-      if (status === 'OK') {
-        if (results.length > 0) {
-          setNearestLocation({
-            name: results[0].name,
-            lat: results[0].geometry.location.lat(),
-            lng: results[0].geometry.location.lng(),
-          });
-        }
+    const placesService = new window.google.maps.places.PlacesService(mapObj);
+    placesService.nearbySearch(request, (results, status) => {
+      if (status === 'OK' && results.length > 0) {
+        const {
+          name,
+          rating,
+          user_ratings_total,
+          geometry: { location },
+        } = results[0];
+        setNearestLocation({
+          name,
+          rating: user_ratings_total === 0 ? null : rating,
+          lat: location.lat(),
+          lng: location.lng(),
+        });
       }
     });
-  }, [mapObj, setNearestLocation]);
+  }, [mapObj, setNearestLocation, keyword, currentLocation, openNow, rankBy, placeType]);
 
   return <div ref={ref} id="map" className="w-full h-full" />;
 }
