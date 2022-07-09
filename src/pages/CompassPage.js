@@ -1,20 +1,29 @@
-import { Wrapper, Status } from '@googlemaps/react-wrapper';
-import Spinner from '../components/Spinner';
-import Error from '../components/Error';
 import Compass from '../components/Compass';
 import Map from '../components/Map';
 import backArrow from '../images/back-arrow.png';
 import { useState } from 'react';
 import { ReactComponent as PinkBlob } from '../images/pink-blob-rotated.svg';
 import MapToggleButton from '../components/MapToggleButton';
+import { useGeo } from '../context/GeoContext';
 
-const render = (status) => {
-  if (status === Status.FAILURE) return <Error />;
-  return <Spinner />;
-};
+export default function CompassPage({ changeView, selectedKeyword }) {
+  const [isMap, setIsMap] = useState(false);
+  const [nearestLocation, setNearestLocation_] = useState(null);
+  const { lat, lng, errorMessage } = useGeo();
 
 export default function CompassPage({ changeView }) {
   const [isMap, setIsMap] = useState(false);
+
+  if (errorMessage) {
+    return <div>{errorMessage}</div>;
+  }
+
+  const setNearestLocation = (location) => {
+    if (JSON.stringify(location) !== JSON.stringify(nearestLocation)) {
+      setNearestLocation_(location);
+      console.log('setNearestLocation:', location);
+    }
+  };
 
   return (
     <>
@@ -28,11 +37,16 @@ export default function CompassPage({ changeView }) {
           height: '40%',
         }}
       />
-      {isMap && (
-        <div className="fixed w-full h-3/4 -z-10">
-          <Map center={{ lat: -36.842, lng: 174.757 }} zoom={15} />
-        </div>
-      )}
+      <div className="fixed w-full h-3/4 -z-10" style={{ visibility: isMap ? 'visible' : 'hidden' }}>
+        <Map
+          center={{ lat, lng }}
+          zoom={15}
+          setNearestLocation={setNearestLocation}
+          keyword={selectedKeyword}
+          currentLocation={{ lat, lng }}
+          openNow={true}
+        />
+      </div>
       <div className="h-full">
         <Wrapper apiKey={process.env.REACT_APP_API_KEY} render={(status) => render(status)}>
           <div className="w-full p-5 flex flex-col items-center gap-10 h-full">
@@ -55,7 +69,7 @@ export default function CompassPage({ changeView }) {
               <MapToggleButton onClick={() => setIsMap(!isMap)} isCurrentlyMap={isMap} />
             </div>
           </div>
-        </Wrapper>
+        </div>
       </div>
     </>
   );
