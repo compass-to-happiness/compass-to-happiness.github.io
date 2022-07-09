@@ -24,33 +24,42 @@ async function startCompassListening({ setBearing }) {
   }
 
   // Promise resolves the error message if compass failed to start, or null.
-  let resolvePromise;
+  let returnError;
   const promise = new Promise((resolve) => {
-    resolvePromise = resolve;
+    returnError = resolve;
   });
   setTimeout(() => {
-    resolvePromise('Failed to start compass after one second.');
+    returnError('Failed to start compass after one second.');
   }, 1000);
 
   const handler = (ev) => {
+    // iOS, see https://developer.apple.com/documentation/webkitjs/deviceorientationevent/1804777-webkitcompassheading.
+    if (ev.webkitCompassHeading != null) {
+      // Successfully recieved orientation data.
+      returnError(null);
+
+      // Report the received bearing.
+      setBearing(-ev.webkitCompassHeading);
+      return;
+    }
+
     // Check that bearing exists.
-    if (ev.webkitCompassHeading == null && ev.alpha == null) {
-      resolvePromise('Compass heading not found in event.');
+    if (ev.alpha == null) {
+      returnError('Compass heading not found in event.');
       return;
     }
 
     // Check that bearing is absolute.
     if (!ev.absolute) {
-      resolvePromise('Compass results are relative to the device.');
+      returnError('Compass results are relative to the device.');
       return;
     }
 
     // Successfully recieved orientation data.
-    resolvePromise(null);
+    returnError(null);
 
     // Report the received bearing.
-    const bearing = ev.webkitCompassHeading || Math.abs(ev.alpha - 360);
-    setBearing(-bearing);
+    setBearing(-Math.abs(ev.alpha - 360));
   };
 
   // Add event listeners, prefer absolute orientation events.
