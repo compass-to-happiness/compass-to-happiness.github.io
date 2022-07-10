@@ -4,6 +4,7 @@ import backArrow from '../images/back-arrow.png';
 import { useState } from 'react';
 import { ReactComponent as PinkBlob } from '../images/pink-blob-rotated.svg';
 import MapToggleButton from '../components/MapToggleButton';
+import Marker from '../components/Marker';
 import { useGeo } from '../context/GeoContext';
 import { useCompass } from '../context/CompassContext';
 
@@ -50,7 +51,9 @@ export default function CompassPage({ changeView, selectedKeyword }) {
           keyword={selectedKeyword}
           currentLocation={{ lat, lng }}
           openNow={true}
-        />
+        >
+          {nearestLocation && <Marker position={nearestLocation} />}
+        </Map>
       </div>
       <div className="h-full">
         <div className="w-full p-5 flex flex-col items-center gap-10 h-full">
