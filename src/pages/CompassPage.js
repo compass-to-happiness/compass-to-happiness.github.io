@@ -4,17 +4,19 @@ import backArrow from '../images/back-arrow.png';
 import { useState } from 'react';
 import { ReactComponent as PinkBlob } from '../images/pink-blob-rotated.svg';
 import MapToggleButton from '../components/MapToggleButton';
+import Marker from '../components/Marker';
 import { useGeo } from '../context/GeoContext';
 import { useCompass } from '../context/CompassContext';
 
 import LoadingPage from './LoadingPage';
 import ErrorPage from './ErrorPage';
+import MarkerCircle from '../components/MarkerCircle';
 
 export default function CompassPage({ changeView, selectedKeyword }) {
   const [isMap, setIsMap] = useState(false);
   const [nearestLocation, setNearestLocation_] = useState(null);
   const { errorMessage: errorMessageCompass } = useCompass();
-  const { lat, lng, errorMessage: errorMessageGeo } = useGeo();
+  const { lat, lng, accuracy, errorMessage: errorMessageGeo } = useGeo();
   const compassAngle = nearestLocation
     ? window.google.maps.geometry.spherical.computeHeading({ lat, lng }, nearestLocation)
     : 0;
@@ -53,7 +55,29 @@ export default function CompassPage({ changeView, selectedKeyword }) {
           keyword={selectedKeyword}
           currentLocation={{ lat, lng }}
           openNow={true}
-        />
+        >
+          {nearestLocation && <Marker position={nearestLocation} />}
+          {!errorMessageGeo && accuracy > 35 && (
+            <MarkerCircle
+              center={{ lat, lng }}
+              radius={accuracy}
+              fillColor="#4286f5"
+              fillOpacity={0.2}
+              strokeColor="#4286f5"
+              strokeWeight={0.5}
+            />
+          )}
+          {!errorMessageGeo && (
+            <MarkerCircle
+              center={{ lat, lng }}
+              radius={30}
+              fillColor="#0a51c2"
+              fillOpacity={0.7}
+              strokeColor="#fff"
+              strokeWeight={1}
+            />
+          )}
+        </Map>
       </div>
       <div className="h-full">
         <div className="w-full p-5 flex flex-col items-center gap-10 h-full">
