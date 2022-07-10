@@ -80,7 +80,7 @@ export default function CompassPage({ changeView, selectedKeyword }) {
         </Map>
       </div>
       <div className="h-full">
-        <div className="w-full p-5 flex flex-col items-center gap-10 h-full">
+        <div className="w-full p-5 flex flex-col items-center gap-10 h-full justify-between">
           <div className="text-center flex flex-col gap-6">
             <h3>Compass to Happiness</h3>
             <button
@@ -91,10 +91,8 @@ export default function CompassPage({ changeView, selectedKeyword }) {
               Something Different
             </button>
           </div>
-          <div className="h-1/2">
-            <Compass angle={compassAngle} className="h-44 w-44" style={{ visibility: isMap ? 'hidden' : '' }} />
-          </div>
-          <div>
+          <Compass angle={compassAngle} className="h-44 w-44" style={{ visibility: isMap ? 'hidden' : '' }} />
+          <div style={{ paddingBottom: '10vh' }}>
             <h2 className="font-bold text-5xl text-center mb-4">{distanceFromLocation}m Away</h2>
             <h3 className="font-bold text-base text-center">{nearestLocation ? nearestLocation.name : ''}</h3>
             <MapToggleButton onClick={() => setIsMap(!isMap)} isCurrentlyMap={isMap} />
