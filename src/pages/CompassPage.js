@@ -49,6 +49,7 @@ export default function CompassPage({ changeView, selectedKeyword }) {
         <Map
           center={{ lat, lng }}
           zoom={15}
+          nearestLocation={nearestLocation}
           setNearestLocation={setNearestLocation}
           keyword={selectedKeyword}
           currentLocation={{ lat, lng }}
