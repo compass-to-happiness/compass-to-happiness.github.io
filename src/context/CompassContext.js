@@ -1,4 +1,6 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
+
+const AVG_N_BEARINGS = 3;
 
 /***
  * Start listening for compass events.
@@ -80,14 +82,29 @@ const CompassContext = createContext({
 export const useCompass = () => useContext(CompassContext);
 
 export const CompassProvider = ({ children }) => {
-  const [bearing, setBearing] = useState(-1);
+  const bearings = useRef([]);
+  const [avgBearing, setAvgBearing] = useState(-1);
   const [errorMessage, setErrorMessage] = useState('Loading...');
 
   useEffect(() => {
-    startCompassListening({ setBearing }).then((error) => {
+    startCompassListening({
+      setBearing: (newBearing) => {
+        if (bearings.current.length > 0 && bearings.current.at(-1) === newBearing) {
+          // Ignore duplicate bearings.
+          return;
+        }
+
+        if (bearings.current.length > AVG_N_BEARINGS) {
+          bearings.current.shift();
+        }
+        bearings.current.push(newBearing);
+
+        setAvgBearing(bearings.current.reduce((a, b) => a + b) / bearings.current.length);
+      },
+    }).then((error) => {
       setErrorMessage(error);
     });
   }, []);
 
-  return <CompassContext.Provider value={{ bearing, errorMessage }} children={children} />;
+  return <CompassContext.Provider value={{ bearing: avgBearing, errorMessage }} children={children} />;
 };
