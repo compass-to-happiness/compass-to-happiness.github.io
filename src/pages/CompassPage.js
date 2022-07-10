@@ -8,6 +8,7 @@ import { useGeo } from '../context/GeoContext';
 import { useCompass } from '../context/CompassContext';
 
 import LoadingPage from './LoadingPage';
+import ErrorPage from './ErrorPage';
 
 export default function CompassPage({ changeView, selectedKeyword }) {
   const [isMap, setIsMap] = useState(false);
@@ -19,8 +20,8 @@ export default function CompassPage({ changeView, selectedKeyword }) {
     : 0;
 
   if (errorMessageGeo === 'Loading...' || errorMessageCompass === 'Loading...') return <LoadingPage />;
-  if (errorMessageGeo) return <p>{errorMessageGeo}</p>;
-  if (errorMessageCompass) return <p>{errorMessageCompass}</p>;
+  if (errorMessageGeo) return <ErrorPage message={errorMessageGeo} />;
+  if (errorMessageCompass) return <ErrorPage message={errorMessageCompass} />;
 
   const setNearestLocation = (location) => {
     if (JSON.stringify(location) !== JSON.stringify(nearestLocation)) {
