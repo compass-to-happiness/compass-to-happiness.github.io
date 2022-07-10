@@ -12,13 +12,13 @@ import LoadingPage from './LoadingPage';
 export default function CompassPage({ changeView, selectedKeyword }) {
   const [isMap, setIsMap] = useState(false);
   const [nearestLocation, setNearestLocation_] = useState(null);
-  const { errorMessage : errorMessageCompass } = useCompass();
-  const { lat, lng, errorMessage } = useGeo();
+  const { errorMessage: errorMessageCompass } = useCompass();
+  const { lat, lng, errorMessage: errorMessageGeo } = useGeo();
   const compassAngle = nearestLocation
     ? window.google.maps.geometry.spherical.computeHeading({ lat, lng }, nearestLocation)
     : 0;
 
-  if (errorMessageGeo === 'Loading...' || errorMessageCompass === 'Loading...' ) return <LoadingPage />;
+  if (errorMessageGeo === 'Loading...' || errorMessageCompass === 'Loading...') return <LoadingPage />;
   if (errorMessageGeo) return <p>{errorMessageGeo}</p>;
   if (errorMessageCompass) return <p>{errorMessageCompass}</p>;
 
