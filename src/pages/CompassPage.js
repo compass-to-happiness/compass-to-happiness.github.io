@@ -92,7 +92,7 @@ export default function CompassPage({ changeView, selectedKeyword }) {
             </button>
           </div>
           <Compass angle={compassAngle} className="h-44 w-44" style={{ visibility: isMap ? 'hidden' : '' }} />
-          <div style={{paddingBottom: '10vh'}}>
+          <div style={{ paddingBottom: '10vh' }}>
             <h2 className="font-bold text-5xl text-center mb-4">{distanceFromLocation}m Away</h2>
             <h3 className="font-bold text-base text-center">{nearestLocation ? nearestLocation.name : ''}</h3>
             <MapToggleButton onClick={() => setIsMap(!isMap)} isCurrentlyMap={isMap} />
