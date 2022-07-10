@@ -118,6 +118,7 @@ export default function Map({
   center,
   zoom,
   children,
+  nearestLocation,
   setNearestLocation,
   keyword,
   currentLocation,
@@ -151,11 +152,20 @@ export default function Map({
   }, [ref, mapObj]);
 
   useEffect(() => {
-    if (mapObj == null) {
+    if (mapObj == null || nearestLocation == null) {
       return;
     }
-    mapObj.setCenter(center);
-  }, [mapObj, center]);
+
+    const equalAndOpposite = {
+      lat: center.lat - (nearestLocation.lat - center.lat),
+      lng: center.lng - (nearestLocation.lng - center.lng),
+    };
+
+    const bounds = new window.google.maps.LatLngBounds();
+    bounds.extend(nearestLocation);
+    bounds.extend(equalAndOpposite);
+    mapObj.fitBounds(bounds);
+  }, [mapObj, center, nearestLocation]);
 
   useEffect(() => {
     if (mapObj == null) {
