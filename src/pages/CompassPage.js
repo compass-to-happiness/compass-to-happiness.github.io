@@ -20,6 +20,9 @@ export default function CompassPage({ changeView, selectedKeyword }) {
   const compassAngle = nearestLocation
     ? window.google.maps.geometry.spherical.computeHeading({ lat, lng }, nearestLocation)
     : 0;
+  const distanceFromLocation = nearestLocation
+    ? window.google.maps.geometry.spherical.computeDistanceBetween({ lat, lng }, nearestLocation).toFixed(2)
+    : '246';
 
   if (errorMessageGeo === 'Loading...' || errorMessageCompass === 'Loading...') return <LoadingPage />;
   if (errorMessageGeo) return <ErrorPage message={errorMessageGeo} />;
@@ -92,8 +95,8 @@ export default function CompassPage({ changeView, selectedKeyword }) {
             <Compass angle={compassAngle} className="h-44 w-44" style={{ visibility: isMap ? 'hidden' : '' }} />
           </div>
           <div>
-            <h2 className="font-bold text-5xl text-center mb-4">246m Away</h2>
-            <h3 className="font-bold text-base text-center">Gelatiamo</h3>
+            <h2 className="font-bold text-5xl text-center mb-4">{distanceFromLocation}m Away</h2>
+            <h3 className="font-bold text-base text-center">{nearestLocation ? nearestLocation.name : ''}</h3>
             <MapToggleButton onClick={() => setIsMap(!isMap)} isCurrentlyMap={isMap} />
           </div>
         </div>
