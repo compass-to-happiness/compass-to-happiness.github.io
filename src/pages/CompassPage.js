@@ -5,18 +5,22 @@ import { useState } from 'react';
 import { ReactComponent as PinkBlob } from '../images/pink-blob-rotated.svg';
 import MapToggleButton from '../components/MapToggleButton';
 import { useGeo } from '../context/GeoContext';
+import { useCompass } from '../context/CompassContext';
+
+import LoadingPage from './LoadingPage';
 
 export default function CompassPage({ changeView, selectedKeyword }) {
   const [isMap, setIsMap] = useState(false);
   const [nearestLocation, setNearestLocation_] = useState(null);
-  const { lat, lng, errorMessage } = useGeo();
+  const { errorMessage: errorMessageCompass } = useCompass();
+  const { lat, lng, errorMessage: errorMessageGeo } = useGeo();
   const compassAngle = nearestLocation
     ? window.google.maps.geometry.spherical.computeHeading({ lat, lng }, nearestLocation)
     : 0;
 
-  if (errorMessage) {
-    return <div>{errorMessage}</div>;
-  }
+  if (errorMessageGeo === 'Loading...' || errorMessageCompass === 'Loading...') return <LoadingPage />;
+  if (errorMessageGeo) return <p>{errorMessageGeo}</p>;
+  if (errorMessageCompass) return <p>{errorMessageCompass}</p>;
 
   const setNearestLocation = (location) => {
     if (JSON.stringify(location) !== JSON.stringify(nearestLocation)) {
