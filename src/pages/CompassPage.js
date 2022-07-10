@@ -17,16 +17,14 @@ export default function CompassPage({ changeView, selectedKeyword }) {
   const [nearestLocation, setNearestLocation_] = useState(null);
   const { errorMessage: errorMessageCompass } = useCompass();
   const { lat, lng, accuracy, errorMessage: errorMessageGeo } = useGeo();
-  const compassAngle = nearestLocation
-    ? window.google.maps.geometry.spherical.computeHeading({ lat, lng }, nearestLocation)
-    : 0;
-  const distanceFromLocation = nearestLocation
-    ? window.google.maps.geometry.spherical.computeDistanceBetween({ lat, lng }, nearestLocation).toFixed(2)
-    : '246';
 
   if (errorMessageGeo === 'Loading...' || errorMessageCompass === 'Loading...') return <LoadingPage />;
   if (errorMessageGeo) return <ErrorPage message={errorMessageGeo} />;
   if (errorMessageCompass) return <ErrorPage message={errorMessageCompass} />;
+
+  const { computeDistanceBetween, computeHeading } = window.google.maps.geometry.spherical;
+  const compassAngle = nearestLocation ? computeHeading({ lat, lng }, nearestLocation) : 0;
+  const distanceFromLocation = nearestLocation ? computeDistanceBetween({ lat, lng }, nearestLocation) : 246;
 
   const setNearestLocation = (location) => {
     if (JSON.stringify(location) !== JSON.stringify(nearestLocation)) {
@@ -51,6 +49,7 @@ export default function CompassPage({ changeView, selectedKeyword }) {
         <Map
           center={{ lat, lng }}
           zoom={15}
+          nearestLocation={nearestLocation}
           setNearestLocation={setNearestLocation}
           keyword={selectedKeyword}
           currentLocation={{ lat, lng }}
@@ -93,7 +92,7 @@ export default function CompassPage({ changeView, selectedKeyword }) {
           </div>
           <Compass angle={compassAngle} className="h-44 w-44" style={{ visibility: isMap ? 'hidden' : '' }} />
           <div style={{ paddingBottom: '10vh' }}>
-            <h2 className="font-bold text-5xl text-center mb-4">{distanceFromLocation}m Away</h2>
+            <h2 className="font-bold text-5xl text-center mb-4">{Math.round(distanceFromLocation)}m Away</h2>
             <h3 className="font-bold text-base text-center">{nearestLocation ? nearestLocation.name : ''}</h3>
             <MapToggleButton onClick={() => setIsMap(!isMap)} isCurrentlyMap={isMap} />
           </div>
