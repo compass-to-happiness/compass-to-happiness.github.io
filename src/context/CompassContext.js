@@ -59,7 +59,7 @@ async function startCompassListening({ setBearing }) {
     returnError(null);
 
     // Report the received bearing.
-    setBearing(-Math.abs(ev.alpha - 360));
+    setBearing(360 - ev.alpha);
   };
 
   // Add event listeners, prefer absolute orientation events.
