@@ -1,7 +1,44 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, isValidElement, Children, cloneElement } from 'react';
 
 const MINUTE = 60 * 1000;
 const DAY = 24 * 60 * 1000;
+
+const MAP_STYLES = [
+  {
+    featureType: 'administrative',
+    elementType: 'geometry',
+    stylers: [
+      {
+        visibility: 'off',
+      },
+    ],
+  },
+  {
+    featureType: 'poi',
+    stylers: [
+      {
+        visibility: 'off',
+      },
+    ],
+  },
+  {
+    featureType: 'road',
+    elementType: 'labels.icon',
+    stylers: [
+      {
+        visibility: 'off',
+      },
+    ],
+  },
+  {
+    featureType: 'transit',
+    stylers: [
+      {
+        visibility: 'off',
+      },
+    ],
+  },
+];
 
 function getFromCache(key) {
   const cached = localStorage.getItem(key);
@@ -80,6 +117,7 @@ function nearbySearchWithCache(mapObj, request, cb) {
 export default function Map({
   center,
   zoom,
+  children,
   setNearestLocation,
   keyword,
   currentLocation,
@@ -106,6 +144,7 @@ export default function Map({
       center,
       zoom,
       disableDefaultUI: true,
+      styles: MAP_STYLES,
     });
     setMapObj(map);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -135,5 +174,14 @@ export default function Map({
     nearbySearchWithCache(mapObj, request, (result) => setNearestLocation(result));
   }, [mapObj, keyword, currentLocation, openNow, rankBy, placeType, setNearestLocation]);
 
-  return <div ref={ref} id="map" className="w-full h-full" />;
+  return (
+    <div ref={ref} id="map" className="w-full h-full">
+      {Children.map(children, (child) => {
+        if (isValidElement(child)) {
+          // set the map prop on the child component
+          return cloneElement(child, { map: mapObj });
+        }
+      })}
+    </div>
+  );
 }
