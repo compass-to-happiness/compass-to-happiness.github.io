@@ -3,6 +3,43 @@ import { useRef, useEffect, useState, isValidElement, Children, cloneElement } f
 const MINUTE = 60 * 1000;
 const DAY = 24 * 60 * 1000;
 
+const MAP_STYLES = [
+  {
+    featureType: 'administrative',
+    elementType: 'geometry',
+    stylers: [
+      {
+        visibility: 'off',
+      },
+    ],
+  },
+  {
+    featureType: 'poi',
+    stylers: [
+      {
+        visibility: 'off',
+      },
+    ],
+  },
+  {
+    featureType: 'road',
+    elementType: 'labels.icon',
+    stylers: [
+      {
+        visibility: 'off',
+      },
+    ],
+  },
+  {
+    featureType: 'transit',
+    stylers: [
+      {
+        visibility: 'off',
+      },
+    ],
+  },
+];
+
 function getFromCache(key) {
   const cached = localStorage.getItem(key);
   if (cached == null) {
@@ -107,6 +144,7 @@ export default function Map({
       center,
       zoom,
       disableDefaultUI: true,
+      styles: MAP_STYLES,
     });
     setMapObj(map);
     // eslint-disable-next-line react-hooks/exhaustive-deps
