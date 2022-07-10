@@ -99,13 +99,24 @@ export default function Map({
       console.log('ref.current is null');
       return;
     }
+    if (mapObj != null) {
+      return;
+    }
     const map = new window.google.maps.Map(ref.current, {
       center,
       zoom,
       disableDefaultUI: true,
     });
     setMapObj(map);
-  }, [center, zoom, ref]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ref, mapObj]);
+
+  useEffect(() => {
+    if (mapObj == null) {
+      return;
+    }
+    mapObj.setCenter(center);
+  }, [mapObj, center]);
 
   useEffect(() => {
     if (mapObj == null) {
