@@ -108,7 +108,7 @@ export default function Map({
       disableDefaultUI: true,
     });
     setMapObj(map);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref, mapObj]);
 
   useEffect(() => {
