@@ -5,13 +5,14 @@ export default function IOSPage({ changeView }) {
   const onClick = async () => {
     await DeviceOrientationEvent.requestPermission();
     changeView('select');
-  }
+  };
 
   return (
     <>
       <div className="h-full flex items-center justify-center p-8 text-center" onClick={onClick}>
         iOS 13+ requires user interaction before we can ask for access to your compass.
-        <br/><br/>
+        <br />
+        <br />
         Please tap anywhere to continue :)
       </div>
       <img
