@@ -7,7 +7,11 @@ import IOSPage from './pages/IOSPage';
 import SelectionPage from './pages/SelectionPage';
 
 function App() {
-  const startPage = window.DeviceOrientationEvent?.requestPermission ? 'ios' : 'select';
+  const startPage =
+    window.DeviceOrientationEvent?.requestPermission &&
+    localStorage.getItem('DeviceOrientationEvent.requestPermission()') !== 'granted'
+      ? 'ios'
+      : 'select';
   const [currentComponent, changeView] = useState(startPage);
   const [selectedLocation, setSelectedLocation] = useState(null);
 

@@ -1,10 +1,25 @@
+import { useState } from 'react';
 import greenBlob from '../images/green-blob.svg';
 import pinkBlob from '../images/pink-blob.svg';
+import ErrorPage from './ErrorPage';
 
+/**
+ * Request permission for DeviceOrientationEvents, required for iOS 13+.
+ */
 export default function IOSPage({ changeView }) {
-  const onClick = async () => {
-    await DeviceOrientationEvent.requestPermission();
+  const [result, setResult] = useState(null);
+
+  if (result === 'granted') {
+    localStorage.setItem('DeviceOrientationEvent.requestPermission()', 'granted');
     changeView('select');
+  } else if (result === 'denied') {
+    const message =
+      'Permission to access device orientation was denied, please completely exit your browser and reload this page to try again.';
+    return <ErrorPage message={<div className="p-8 text-center">{message}</div>} />;
+  }
+
+  const onClick = async () => {
+    setResult(await DeviceOrientationEvent.requestPermission());
   };
 
   return (
